@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quick Boost</title>
+  
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <meta name="theme-color" content="#3B71F6">
+
   <style>
     /* --- NEW CLEAN UI UPGRADE --- */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -80,8 +85,9 @@
       color: #3B71F6;
       margin: 40px auto 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      overflow: hidden; /* Added to keep the image inside the rounded corners */
     }
-    .home-hero-icon svg { width: 40px; height: 40px; }
+    .home-hero-icon img { width: 100%; height: 100%; object-fit: cover; }
 
     /* Inputs */
     input[type="text"], input[type="number"], input[type="time"], input[type="email"], input[type="password"], select {
@@ -214,9 +220,7 @@
 
       <div id="screen-login" class="screen active">
         <div class="home-hero-icon" style="margin-bottom: 20px;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line>
-          </svg>
+          <img src="./icon-192.png" alt="Quick Boost Logo">
         </div>
         
         <h1 id="auth-title">Welcome</h1>
@@ -239,9 +243,7 @@
       
       <div id="screen-home" class="screen">
         <div class="home-hero-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-          </svg>
+          <img src="./icon-192.png" alt="Quick Boost Logo">
         </div>
         <h1>Quick Boost</h1>
         <div class="sub-title">HIIT workouts to energize your day</div>
@@ -474,12 +476,11 @@
     var buildSequence = [], pendingName = "", editingWorkoutId = null, editingExerciseName = null, builderSource = 'workout-list';
     var pendingWorkoutId = null, pendingIsCustom = false; 
 
-    // --- NEW: CLOUD SYNCING FUNCTION ---
+    // --- CLOUD SYNCING FUNCTION ---
     async function syncDataToCloud() {
       if (window.auth && window.auth.currentUser && window.db) {
         const uid = window.auth.currentUser.uid;
         try {
-          // Send all local data straight to the user's document in Firestore
           await window.setDoc(window.doc(window.db, "users", uid), {
             customWorkouts: customWorkouts,
             customExercises: customExercises,
@@ -555,14 +556,14 @@
       qbSettings.time = document.getElementById('set-time').value;
       qbSettings.prepTime = parseInt(document.getElementById('set-prep').value) || 5;
       localStorage.setItem('qb_settings', JSON.stringify(qbSettings));
-      syncDataToCloud(); // Save to Cloud
+      syncDataToCloud(); 
     }
 
     function toggleReminder() {
       qbSettings.reminders = document.getElementById('set-remind').checked;
       document.getElementById('remind-time-row').style.display = qbSettings.reminders ? "flex" : "none";
       if(qbSettings.reminders && "Notification" in window) Notification.requestPermission();
-      updateSettings(); // This already syncs to cloud
+      updateSettings(); 
     }
 
     // 5. NAVIGATION & MODALS
@@ -745,7 +746,7 @@
     function confirmDelete() {
       customWorkouts = customWorkouts.filter(w => w.id !== workoutToDelete);
       localStorage.setItem('qb_customs', JSON.stringify(customWorkouts));
-      syncDataToCloud(); // Save to Cloud
+      syncDataToCloud(); 
       closeModal('modal-delete');
       if (document.getElementById('modal-profile-workouts').classList.contains('active')) renderProfileWorkouts();
       if (document.getElementById('screen-custom-workouts').classList.contains('active')) renderCustomList();
@@ -834,7 +835,7 @@
         customWorkouts.push(newWorkout);
       }
       localStorage.setItem('qb_customs', JSON.stringify(customWorkouts));
-      syncDataToCloud(); // Save to Cloud
+      syncDataToCloud(); 
       
       if (builderSource === 'profile') { navTo('screen-profile', 'profile'); openProfileWorkouts(); } else openCustomWorkouts();
     }
@@ -898,7 +899,7 @@
       if (exerciseLibrary.includes(newName) || customExercises.includes(newName)) { alert("Exists."); return; }
       customExercises.push(newName); 
       localStorage.setItem('qb_custom_ex', JSON.stringify(customExercises)); 
-      syncDataToCloud(); // Save to Cloud
+      syncDataToCloud(); 
       
       closeModal('modal-create-ex');
       if (document.getElementById('modal-exercise-lib').classList.contains('active')) renderLibrary();
@@ -919,7 +920,7 @@
       customWorkouts.forEach(workout => { workout.sequence.forEach(block => { if (block.name === editingExerciseName) block.name = newName; }); });
       localStorage.setItem('qb_customs', JSON.stringify(customWorkouts));
       
-      syncDataToCloud(); // Save to Cloud
+      syncDataToCloud(); 
 
       if (buildSequence.length > 0) { buildSequence.forEach(block => { if (block.name === editingExerciseName) block.name = newName; }); renderBuilderBlocks(); }
       closeModal('modal-edit-ex');
@@ -930,7 +931,7 @@
     function confirmDeleteExercise() {
       customExercises = customExercises.filter(ex => ex !== exerciseToDelete); 
       localStorage.setItem('qb_custom_ex', JSON.stringify(customExercises)); 
-      syncDataToCloud(); // Save to Cloud
+      syncDataToCloud(); 
       
       closeModal('modal-delete-ex');
       if (document.getElementById('modal-profile-ex').classList.contains('active')) renderProfileExercises();
@@ -1038,7 +1039,7 @@
         qbStats.workoutHistory[currentWorkout.title] = (qbStats.workoutHistory[currentWorkout.title] || 0) + 1;
         localStorage.setItem('qb_stats', JSON.stringify(qbStats));
         
-        syncDataToCloud(); // Save completed workout progress to cloud
+        syncDataToCloud();
 
         const streakMsg = document.getElementById('modal-streak-msg');
         let streak = 0; let checkDate = new Date(); let checkStr = getFormattedDate(checkDate);
@@ -1094,7 +1095,6 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
     
-    // Attach to window so our main script can use them
     window.auth = auth;
     window.db = db;
     window.doc = doc;
@@ -1117,7 +1117,6 @@
         if (isSignUp) {
           const userCredential = await createUserWithEmailAndPassword(auth, email, password);
           const user = userCredential.user;
-          // Create the blank profile on sign up
           await setDoc(doc(db, "users", user.uid), {
             customWorkouts: [],
             customExercises: [],
@@ -1145,25 +1144,21 @@
       }
     };
 
-    // --- NEW: CLOUD LOADING FUNCTION ---
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         document.getElementById('user-email-display').innerText = user.email;
         
         try {
-            // 1. Download data from Cloud
             const docSnap = await getDoc(doc(db, "users", user.uid));
             if (docSnap.exists()) {
                 const data = docSnap.data();
                 
-                // 2. Overwrite local variables with cloud data
                 if (data.customWorkouts) window.customWorkouts = data.customWorkouts;
                 if (data.customExercises) window.customExercises = data.customExercises;
                 if (data.qbSettings) window.qbSettings = data.qbSettings;
                 if (data.qbStats) window.qbStats = data.qbStats;
                 if (data.loggedDates) window.loggedDates = data.loggedDates;
                 
-                // 3. Refresh the UI to show the downloaded data
                 window.loadSettingsUI();
                 window.updateProfileData();
             }
@@ -1171,7 +1166,6 @@
             console.error("Error loading cloud data:", e);
         }
 
-        // Send to home screen
         if (document.getElementById('screen-login').classList.contains('active')) {
             window.navTo('screen-home', 'home');
         }
@@ -1180,6 +1174,16 @@
         window.navTo('screen-login', null);
       }
     });
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('Service Worker registered!'))
+          .catch(err => console.log('Service Worker failed: ', err));
+      });
+    }
   </script>
 </body>
 </html>
