@@ -11,7 +11,7 @@
     body, html {
       margin: 0; padding: 0; height: 100%;
       font-family: 'Inter', sans-serif;
-      background: #3B71F6; /* The vibrant blue from your screenshot */
+      background: #3B71F6; 
       color: #ffffff;
       overflow: hidden;
     }
@@ -38,13 +38,14 @@
     .sub-title { font-size: 1rem; font-weight: 500; color: rgba(255,255,255,0.9); margin-bottom: 30px; }
     h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 15px; margin-top: 30px; color: #ffffff; text-align: left; width: 100%; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 5px;}
 
-    /* Workout Cards (Matching the Screenshot) */
+    /* Workout Cards */
     .workout-card {
       background: #ffffff;
       border-radius: 20px;
       padding: 20px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 15px;
       cursor: pointer;
       border: none;
@@ -59,10 +60,10 @@
 
     .icon-box {
       width: 50px; height: 50px;
-      background: #e0eaff; /* Light blue background */
+      background: #e0eaff;
       border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
-      color: #3B71F6; /* Dark blue icon */
+      color: #3B71F6; 
       flex-shrink: 0;
     }
 
@@ -82,8 +83,8 @@
     }
     .home-hero-icon svg { width: 40px; height: 40px; }
 
-    /* Inputs (Light theme for modals/settings) */
-    input[type="text"], input[type="number"], input[type="time"], select {
+    /* Inputs */
+    input[type="text"], input[type="number"], input[type="time"], input[type="email"], input[type="password"], select {
       background: #f8fafc; border: 1px solid #cbd5e1;
       color: #1e293b; font-size: 1rem; font-family: 'Inter', sans-serif; font-weight: 500;
       padding: 15px; border-radius: 12px; width: 100%; box-sizing: border-box;
@@ -111,7 +112,7 @@
     
     .danger-btn { background: #fee2e2 !important; color: #ef4444 !important; border: none !important; box-shadow: none !important; }
 
-    /* Standard List Items (Used in modals & profile) */
+    /* Standard List Items */
     .list-item {
       background: #ffffff; color: #1e293b; padding: 15px; border-radius: 16px; 
       display: flex; justify-content: space-between; align-items: center; 
@@ -158,7 +159,7 @@
     .switch input { opacity: 0; width: 0; height: 0; }
     .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.3); transition: .4s; border-radius: 34px; }
     .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
-    input:checked + .slider { background-color: #F2EE0C; } /* Yellow when active */
+    input:checked + .slider { background-color: #F2EE0C; }
     input:checked + .slider:before { transform: translateX(22px); }
 
     /* Floating Bottom Navigation */
@@ -187,7 +188,7 @@
     }
     .control-btn:hover { background: rgba(255, 255, 255, 0.3); }
 
-    /* Modals (Now Light Theme) */
+    /* Modals */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(5px);
       display: none; align-items: center; justify-content: center; z-index: 1000;
@@ -210,8 +211,33 @@
 
   <div class="app-container">
     <div class="content-area">
+
+      <div id="screen-login" class="screen active">
+        <div class="home-hero-icon" style="margin-bottom: 20px;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line>
+          </svg>
+        </div>
+        
+        <h1 id="auth-title">Welcome</h1>
+        <div class="sub-title" id="auth-subtitle">Sign in to save your workouts</div>
+
+        <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 20px; text-align: left; margin-bottom: 20px;">
+          <label style="font-size: 0.85rem; color: #ffffff; font-weight: 600; margin-left: 5px; margin-bottom: 5px; display: block;">Email</label>
+          <input type="email" id="auth-email" placeholder="your@email.com" style="margin-bottom: 15px;">
+          
+          <label style="font-size: 0.85rem; color: #ffffff; font-weight: 600; margin-left: 5px; margin-bottom: 5px; display: block;">Password</label>
+          <input type="password" id="auth-password" placeholder="••••••••" style="margin-bottom: 20px;">
+          
+          <button class="white-btn" id="auth-action-btn" onclick="handleAuth()" style="margin-bottom: 10px;">Log In</button>
+        </div>
+
+        <button class="white-btn outline-btn" id="auth-toggle-btn" onclick="toggleAuthMode()" style="border: none !important; font-size: 0.95rem; text-decoration: underline;">
+          Need an account? Sign Up
+        </button>
+      </div>
       
-      <div id="screen-home" class="screen active">
+      <div id="screen-home" class="screen">
         <div class="home-hero-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
@@ -268,7 +294,10 @@
 
       <div id="screen-builder" class="screen">
         <h2>Workout Builder</h2>
-        <input type="text" id="builder-title" placeholder="Name your workout (e.g. Morning Burn)" style="background: rgba(255,255,255,0.2); border:none; color:white;">
+        
+        <input type="text" id="builder-title" placeholder="Workout Name (Tap here to name)" style="background: #ffffff; border: 2px solid #ffffff; color: #3B71F6; font-weight: 700; font-size: 1.1rem; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 5px;">
+        <div style="font-size: 0.85rem; color: rgba(255,255,255,0.8); margin-bottom: 20px;">Add an exercise or rest below to start building.</div>
+        
         <div id="builder-blocks" style="min-height: 150px; margin-bottom: 20px;"></div>
         <div class="flex-row">
           <button class="white-btn outline-btn" onclick="openExerciseLibrary()">+ Exercise</button>
@@ -285,7 +314,7 @@
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-value" id="stat-total-mins">0</div>
-            <div class="stat-label">Total Mins</div>
+            <div class="stat-label">Mins This Month</div>
           </div>
           <div class="stat-card">
             <div class="stat-value" id="stat-fav" style="font-size:1.1rem; line-height: 1.2;">None</div>
@@ -315,6 +344,12 @@
         <div class="sub-title">Customize your experience</div>
         
         <div style="width: 100%; text-align: left; margin-top: 20px;">
+          
+          <div class="settings-row" style="background: rgba(255,255,255,0.2);">
+            <div><div class="settings-label">Account</div><div class="settings-sub" id="user-email-display">Not logged in</div></div>
+            <button class="white-btn outline-btn" onclick="handleLogout()" style="width: auto; padding: 8px 15px; margin-bottom: 0; font-size: 0.85rem; border-color: rgba(255,255,255,0.5) !important;">Sign Out</button>
+          </div>
+
           <div class="settings-row">
             <div><div class="settings-label">Prep Timer</div><div class="settings-sub">Countdown before start</div></div>
             <select id="set-prep" onchange="updateSettings()" style="width: auto; margin:0; padding: 5px 10px; background: #ffffff; color: #3B71F6; border:none; font-weight: bold;">
@@ -390,90 +425,15 @@
     </div>
   </div>
 
-  <div id="modal-profile-workouts" class="modal-overlay">
-    <div class="modal-content">
-      <h2>Custom Workouts</h2>
-      <button class="white-btn" onclick="openBuilderFromProfile()" style="font-size: 0.95rem; padding: 12px; margin-bottom: 15px;">+ Create New Workout</button>
-      <div class="modal-scroll" id="profile-workouts-container" style="height: 300px; min-height: 300px; flex: none;"></div>
-      <button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-profile-workouts')">Close</button>
-    </div>
-  </div>
-
-  <div id="modal-profile-ex" class="modal-overlay">
-    <div class="modal-content">
-      <h2>Custom Exercises</h2>
-      <button class="white-btn" onclick="openCreateExerciseModal()" style="font-size: 0.95rem; padding: 12px; margin-bottom: 15px;">+ Create New Exercise</button>
-      <div class="modal-scroll" id="profile-ex-container" style="height: 300px; min-height: 300px; flex: none;"></div>
-      <button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-profile-ex')">Close</button>
-    </div>
-  </div>
-
-  <div id="modal-exercise-lib" class="modal-overlay">
-    <div class="modal-content">
-      <h2>Select Exercise</h2>
-      <button class="white-btn" onclick="openCreateExerciseModal()" style="font-size: 0.95rem; padding: 12px; margin-bottom: 10px;">+ New Exercise</button>
-      <input type="text" id="lib-search" onkeyup="renderLibrary()" placeholder="Search exercises...">
-      <div class="modal-scroll" id="lib-container" style="height: 300px; min-height: 300px; flex: none;"></div>
-      <button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-exercise-lib')">Cancel</button>
-    </div>
-  </div>
-
-  <div id="modal-create-ex" class="modal-overlay">
-    <div class="modal-content" style="max-width: 320px;">
-      <h2>New Exercise</h2>
-      <input type="text" id="new-ex-name" placeholder="Exercise name (e.g. Lunges)">
-      <button class="white-btn" onclick="saveCustomExercise()">Save to Library</button>
-      <button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-create-ex')">Cancel</button>
-    </div>
-  </div>
-
-  <div id="modal-edit-ex" class="modal-overlay">
-    <div class="modal-content" style="max-width: 320px;">
-      <h2>Edit Exercise</h2>
-      <input type="text" id="edit-ex-name" placeholder="New exercise name">
-      <button class="white-btn" onclick="saveEditedExercise()">Save Changes</button>
-      <button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-edit-ex')">Cancel</button>
-    </div>
-  </div>
-
-  <div id="modal-duration" class="modal-overlay">
-    <div class="modal-content" style="max-width: 300px;">
-      <h2 id="duration-title">Set Time</h2>
-      <div class="input-row">
-        <div><label>Minutes</label><input type="number" id="dur-min" value="0" min="0" max="60"></div>
-        <div><label>Seconds</label><input type="number" id="dur-sec" id="dur-default" value="15" min="0" max="59"></div>
-      </div>
-      <button class="white-btn" onclick="confirmDuration()">Add to Workout</button>
-      <button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-duration')">Cancel</button>
-    </div>
-  </div>
-
-  <div id="modal-delete" class="modal-overlay">
-    <div class="modal-content" style="max-width: 300px;">
-      <h2>Are you sure?</h2>
-      <p style="margin-bottom: 20px; color: #64748b; font-weight: 500;">This will permanently delete this custom workout.</p>
-      <button class="white-btn danger-btn" onclick="confirmDelete()">Yes, Delete</button>
-      <button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-delete')">No, Keep it</button>
-    </div>
-  </div>
-
-  <div id="modal-delete-ex" class="modal-overlay">
-    <div class="modal-content" style="max-width: 300px;">
-      <h2>Are you sure?</h2>
-      <p style="margin-bottom: 20px; color: #64748b; font-weight: 500;">This will permanently delete this custom exercise.</p>
-      <button class="white-btn danger-btn" onclick="confirmDeleteExercise()">Yes, Delete</button>
-      <button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-delete-ex')">No, Keep it</button>
-    </div>
-  </div>
-
-  <div id="completion-modal" class="modal-overlay">
-    <div class="modal-content" style="max-width: 300px;">
-      <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Great job!</h2>
-      <div id="modal-streak-msg" style="font-size: 1.1rem; font-weight: 700; color: #10b981; margin-bottom: 5px;"></div>
-      <div id="modal-badge-msg" style="font-size: 0.95rem; color: #3B71F6; margin-bottom: 25px; font-weight:600;"></div>
-      <button class="white-btn" onclick="closeModal('completion-modal'); navTo('screen-home', 'home');" style="margin-bottom: 0;">Close</button>
-    </div>
-  </div>
+  <div id="modal-profile-workouts" class="modal-overlay"><div class="modal-content"><h2>Custom Workouts</h2><button class="white-btn" onclick="openBuilderFromProfile()" style="font-size: 0.95rem; padding: 12px; margin-bottom: 15px;">+ Create New Workout</button><div class="modal-scroll" id="profile-workouts-container" style="height: 300px; min-height: 300px; flex: none;"></div><button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-profile-workouts')">Close</button></div></div>
+  <div id="modal-profile-ex" class="modal-overlay"><div class="modal-content"><h2>Custom Exercises</h2><button class="white-btn" onclick="openCreateExerciseModal()" style="font-size: 0.95rem; padding: 12px; margin-bottom: 15px;">+ Create New Exercise</button><div class="modal-scroll" id="profile-ex-container" style="height: 300px; min-height: 300px; flex: none;"></div><button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-profile-ex')">Close</button></div></div>
+  <div id="modal-exercise-lib" class="modal-overlay"><div class="modal-content"><h2>Select Exercise</h2><button class="white-btn" onclick="openCreateExerciseModal()" style="font-size: 0.95rem; padding: 12px; margin-bottom: 10px;">+ New Exercise</button><input type="text" id="lib-search" onkeyup="renderLibrary()" placeholder="Search exercises..."><div class="modal-scroll" id="lib-container" style="height: 300px; min-height: 300px; flex: none;"></div><button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-exercise-lib')">Cancel</button></div></div>
+  <div id="modal-create-ex" class="modal-overlay"><div class="modal-content" style="max-width: 320px;"><h2>New Exercise</h2><input type="text" id="new-ex-name" placeholder="Exercise name (e.g. Lunges)"><button class="white-btn" onclick="saveCustomExercise()">Save to Library</button><button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-create-ex')">Cancel</button></div></div>
+  <div id="modal-edit-ex" class="modal-overlay"><div class="modal-content" style="max-width: 320px;"><h2>Edit Exercise</h2><input type="text" id="edit-ex-name" placeholder="New exercise name"><button class="white-btn" onclick="saveEditedExercise()">Save Changes</button><button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-edit-ex')">Cancel</button></div></div>
+  <div id="modal-duration" class="modal-overlay"><div class="modal-content" style="max-width: 300px;"><h2 id="duration-title">Set Time</h2><div class="input-row"><div><label>Minutes</label><input type="number" id="dur-min" value="0" min="0" max="60"></div><div><label>Seconds</label><input type="number" id="dur-sec" id="dur-default" value="15" min="0" max="59"></div></div><button class="white-btn" onclick="confirmDuration()">Add to Workout</button><button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-duration')">Cancel</button></div></div>
+  <div id="modal-delete" class="modal-overlay"><div class="modal-content" style="max-width: 300px;"><h2>Are you sure?</h2><p style="margin-bottom: 20px; color: #64748b; font-weight: 500;">This will permanently delete this custom workout.</p><button class="white-btn danger-btn" onclick="confirmDelete()">Yes, Delete</button><button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-delete')">No, Keep it</button></div></div>
+  <div id="modal-delete-ex" class="modal-overlay"><div class="modal-content" style="max-width: 300px;"><h2>Are you sure?</h2><p style="margin-bottom: 20px; color: #64748b; font-weight: 500;">This will permanently delete this custom exercise.</p><button class="white-btn danger-btn" onclick="confirmDeleteExercise()">Yes, Delete</button><button class="white-btn" style="background: #f1f5f9; color: #64748b; box-shadow: none; margin-bottom: 0;" onclick="closeModal('modal-delete-ex')">No, Keep it</button></div></div>
+  <div id="completion-modal" class="modal-overlay"><div class="modal-content" style="max-width: 300px;"><h2 style="font-size: 2.5rem; margin-bottom: 10px;">Great job!</h2><div id="modal-streak-msg" style="font-size: 1.1rem; font-weight: 700; color: #10b981; margin-bottom: 25px;"></div><button class="white-btn" onclick="closeModal('completion-modal'); navTo('screen-home', 'home');" style="margin-bottom: 0;">Close</button></div></div>
 
   <script>
     // 1. BUILT-IN DATA
@@ -497,21 +457,57 @@
       "Standing Torso Twists", "Sumo Squats", "Toe Touches to Reach", "Tricep Dips", "V-Ups", "Wall Sit", "Wide Push-Ups"
     ];
 
-    // 2. LOCAL STORAGE & GLOBAL STATE
-    let loggedDates = JSON.parse(localStorage.getItem('qb_logs')) || [];
-    let customWorkouts = JSON.parse(localStorage.getItem('qb_customs')) || [];
-    let customExercises = JSON.parse(localStorage.getItem('qb_custom_ex')) || [];
-    let qbSettings = JSON.parse(localStorage.getItem('qb_settings')) || { audio: true, haptic: true, reminders: false, time: "08:00", prepTime: 5 };
-    let qbStats = JSON.parse(localStorage.getItem('qb_stats')) || { totalSeconds: 0, workoutHistory: {} };
-    let qbBadges = JSON.parse(localStorage.getItem('qb_badges')) || { club100: false, weekend: false, architect: false };
+    // 2. LOCAL STORAGE & GLOBAL STATE (Changed to 'var' to allow cloud syncing)
+    var isSignUpMode = false;
+    var loggedDates = JSON.parse(localStorage.getItem('qb_logs')) || [];
+    var customWorkouts = JSON.parse(localStorage.getItem('qb_customs')) || [];
+    var customExercises = JSON.parse(localStorage.getItem('qb_custom_ex')) || [];
+    var qbSettings = JSON.parse(localStorage.getItem('qb_settings')) || { audio: true, haptic: true, reminders: false, time: "08:00", prepTime: 5 };
+    var qbStats = JSON.parse(localStorage.getItem('qb_stats')) || { workoutHistory: {}, monthlySeconds: {} };
+    if (!qbStats.monthlySeconds) qbStats.monthlySeconds = {};
 
-    let currentWorkout = null, currentSeqIndex = 0, phase = 'prep';
-    let timeLeft = 0, totalElapsed = 0, timerInterval = null, isRunning = false;
-    let currentCalDate = new Date();
-    let sortAscending = true;
-    let workoutToDelete = null, exerciseToDelete = null;
-    let buildSequence = [], pendingName = "", editingWorkoutId = null, editingExerciseName = null, builderSource = 'workout-list';
-    let pendingWorkoutId = null, pendingIsCustom = false; 
+    var currentWorkout = null, currentSeqIndex = 0, phase = 'prep';
+    var timeLeft = 0, totalElapsed = 0, timerInterval = null, isRunning = false;
+    var currentCalDate = new Date();
+    var sortAscending = true;
+    var workoutToDelete = null, exerciseToDelete = null;
+    var buildSequence = [], pendingName = "", editingWorkoutId = null, editingExerciseName = null, builderSource = 'workout-list';
+    var pendingWorkoutId = null, pendingIsCustom = false; 
+
+    // --- NEW: CLOUD SYNCING FUNCTION ---
+    async function syncDataToCloud() {
+      if (window.auth && window.auth.currentUser && window.db) {
+        const uid = window.auth.currentUser.uid;
+        try {
+          // Send all local data straight to the user's document in Firestore
+          await window.setDoc(window.doc(window.db, "users", uid), {
+            customWorkouts: customWorkouts,
+            customExercises: customExercises,
+            qbSettings: qbSettings,
+            qbStats: qbStats,
+            loggedDates: loggedDates
+          }, { merge: true });
+        } catch (e) {
+          console.error("Cloud sync failed: ", e);
+        }
+      }
+    }
+
+    // --- AUTHENTICATION UI LOGIC ---
+    function toggleAuthMode() {
+      isSignUpMode = !isSignUpMode;
+      if (isSignUpMode) {
+        document.getElementById('auth-title').innerText = "Create Account";
+        document.getElementById('auth-subtitle').innerText = "Join to sync your progress";
+        document.getElementById('auth-action-btn').innerText = "Sign Up";
+        document.getElementById('auth-toggle-btn').innerText = "Already have an account? Log In";
+      } else {
+        document.getElementById('auth-title').innerText = "Welcome Back";
+        document.getElementById('auth-subtitle').innerText = "Sign in to save your workouts";
+        document.getElementById('auth-action-btn').innerText = "Log In";
+        document.getElementById('auth-toggle-btn').innerText = "Need an account? Sign Up";
+      }
+    }
 
     // 3. UTILITIES & HARDWARE 
     function getFormattedDate(dateObj) {
@@ -559,13 +555,14 @@
       qbSettings.time = document.getElementById('set-time').value;
       qbSettings.prepTime = parseInt(document.getElementById('set-prep').value) || 5;
       localStorage.setItem('qb_settings', JSON.stringify(qbSettings));
+      syncDataToCloud(); // Save to Cloud
     }
 
     function toggleReminder() {
       qbSettings.reminders = document.getElementById('set-remind').checked;
       document.getElementById('remind-time-row').style.display = qbSettings.reminders ? "flex" : "none";
       if(qbSettings.reminders && "Notification" in window) Notification.requestPermission();
-      updateSettings();
+      updateSettings(); // This already syncs to cloud
     }
 
     // 5. NAVIGATION & MODALS
@@ -573,7 +570,7 @@
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(screenId).classList.add('active');
       
-      document.getElementById('bottom-nav').style.display = (screenId === 'screen-workout') ? 'none' : 'flex';
+      document.getElementById('bottom-nav').style.display = (screenId === 'screen-workout' || screenId === 'screen-login') ? 'none' : 'flex';
       
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
       if(tabName && document.getElementById('nav-' + tabName)) {
@@ -600,7 +597,7 @@
       randBtn.innerHTML = `
         <div class="card-text">
           <div class="card-title">Surprise Me!</div>
-          <div class="card-sub">Start a random ${duration}-min workout</div>
+          <div class="card-sub">Play a random ${duration}-min workout</div>
         </div>
       `;
       randBtn.onclick = () => playRandomCategory(duration);
@@ -639,7 +636,7 @@
       }
     }
 
-    // 7. CUSTOM WORKOUTS LIST
+    // 7. CUSTOM WORKOUTS LIST 
     function openCustomWorkouts() {
       document.getElementById('custom-search').value = ""; renderCustomList(); navTo('screen-custom-workouts', 'workout');
     }
@@ -665,16 +662,34 @@
       randBtn.style.display = 'block';
 
       filtered.forEach(workout => {
-        const item = document.createElement('button'); 
+        const item = document.createElement('div'); 
         item.className = 'workout-card';
+        item.style.cursor = 'default';
         item.innerHTML = `
-          <div class="card-text">
+          <div class="card-text" style="cursor: pointer; flex: 1;" onclick="showWorkoutSummary('${workout.id}', true)">
             <div class="card-title">${workout.title}</div>
           </div>
+          <div class="action-group" style="flex-shrink: 0;">
+            <button class="icon-btn" onclick="editWorkoutFromList('${workout.id}', event)">✏️</button>
+            <button class="icon-btn icon-danger" onclick="promptDeleteWorkout('${workout.id}', event)">🗑️</button>
+          </div>
         `;
-        item.onclick = () => showWorkoutSummary(workout.id, true);
         container.appendChild(item);
       });
+    }
+
+    function editWorkoutFromList(id, event) {
+        event.stopPropagation();
+        builderSource = 'workout-list';
+        const workout = customWorkouts.find(w => w.id === id); if(!workout) return;
+        editingWorkoutId = id; buildSequence = JSON.parse(JSON.stringify(workout.sequence));
+        document.getElementById('builder-title').value = workout.title; renderBuilderBlocks(); navTo('screen-builder', 'workout');
+    }
+
+    function promptDeleteWorkout(id, event) {
+        event.stopPropagation();
+        workoutToDelete = id; 
+        openModal('modal-delete');
     }
 
     // 8. SUMMARY SCREEN LOGIC
@@ -730,6 +745,7 @@
     function confirmDelete() {
       customWorkouts = customWorkouts.filter(w => w.id !== workoutToDelete);
       localStorage.setItem('qb_customs', JSON.stringify(customWorkouts));
+      syncDataToCloud(); // Save to Cloud
       closeModal('modal-delete');
       if (document.getElementById('modal-profile-workouts').classList.contains('active')) renderProfileWorkouts();
       if (document.getElementById('screen-custom-workouts').classList.contains('active')) renderCustomList();
@@ -794,8 +810,19 @@
     }
 
     function saveCustomWorkout() {
-      const title = document.getElementById('builder-title').value.trim();
-      if (!title) { alert("Please enter a workout name."); return; }
+      const titleInput = document.getElementById('builder-title');
+      const title = titleInput.value.trim();
+
+      if (!title) { 
+          titleInput.style.border = '2px solid #ef4444';
+          titleInput.style.background = '#fee2e2';
+          alert("Oops! Please name your workout in the white box at the top of the screen before saving."); 
+          setTimeout(() => {
+              titleInput.style.border = '2px solid #ffffff';
+              titleInput.style.background = '#ffffff';
+          }, 2500);
+          return; 
+      }
       if (buildSequence.length === 0) { alert("Please add at least one exercise."); return; }
 
       if (editingWorkoutId) {
@@ -805,9 +832,10 @@
       } else {
         const newWorkout = { id: 'c_' + Date.now(), title: title, sequence: [...buildSequence] };
         customWorkouts.push(newWorkout);
-        if(!qbBadges.architect) { qbBadges.architect = true; localStorage.setItem('qb_badges', JSON.stringify(qbBadges)); }
       }
       localStorage.setItem('qb_customs', JSON.stringify(customWorkouts));
+      syncDataToCloud(); // Save to Cloud
+      
       if (builderSource === 'profile') { navTo('screen-profile', 'profile'); openProfileWorkouts(); } else openCustomWorkouts();
     }
 
@@ -868,7 +896,11 @@
       const newName = document.getElementById('new-ex-name').value.trim();
       if (!newName) { alert("Enter a name."); return; }
       if (exerciseLibrary.includes(newName) || customExercises.includes(newName)) { alert("Exists."); return; }
-      customExercises.push(newName); localStorage.setItem('qb_custom_ex', JSON.stringify(customExercises)); closeModal('modal-create-ex');
+      customExercises.push(newName); 
+      localStorage.setItem('qb_custom_ex', JSON.stringify(customExercises)); 
+      syncDataToCloud(); // Save to Cloud
+      
+      closeModal('modal-create-ex');
       if (document.getElementById('modal-exercise-lib').classList.contains('active')) renderLibrary();
       if (document.getElementById('modal-profile-ex').classList.contains('active')) renderProfileExercises();
     }
@@ -887,6 +919,8 @@
       customWorkouts.forEach(workout => { workout.sequence.forEach(block => { if (block.name === editingExerciseName) block.name = newName; }); });
       localStorage.setItem('qb_customs', JSON.stringify(customWorkouts));
       
+      syncDataToCloud(); // Save to Cloud
+
       if (buildSequence.length > 0) { buildSequence.forEach(block => { if (block.name === editingExerciseName) block.name = newName; }); renderBuilderBlocks(); }
       closeModal('modal-edit-ex');
       if (document.getElementById('modal-profile-ex').classList.contains('active')) renderProfileExercises();
@@ -894,12 +928,16 @@
     }
 
     function confirmDeleteExercise() {
-      customExercises = customExercises.filter(ex => ex !== exerciseToDelete); localStorage.setItem('qb_custom_ex', JSON.stringify(customExercises)); closeModal('modal-delete-ex');
+      customExercises = customExercises.filter(ex => ex !== exerciseToDelete); 
+      localStorage.setItem('qb_custom_ex', JSON.stringify(customExercises)); 
+      syncDataToCloud(); // Save to Cloud
+      
+      closeModal('modal-delete-ex');
       if (document.getElementById('modal-profile-ex').classList.contains('active')) renderProfileExercises();
       if (document.getElementById('modal-exercise-lib').classList.contains('active')) renderLibrary();
     }
 
-    // 12. PROFILE PROGRESS & BADGES
+    // 12. PROFILE PROGRESS
     function updateProfileData() {
       let streak = 0; let checkDate = new Date(); let todayStr = getFormattedDate(checkDate);
       checkDate.setDate(checkDate.getDate() - 1); let yesterdayStr = getFormattedDate(checkDate);
@@ -913,16 +951,18 @@
       }
       document.getElementById('profile-streak-display').innerText = `${streak} day streak`;
       
-      document.getElementById('stat-total-mins').innerText = Math.floor(qbStats.totalSeconds / 60);
+      const currentMonthKey = getFormattedDate(new Date()).substring(0, 7);
+      let monthSecs = 0;
+      if (qbStats.monthlySeconds && qbStats.monthlySeconds[currentMonthKey]) {
+          monthSecs = qbStats.monthlySeconds[currentMonthKey];
+      }
+      document.getElementById('stat-total-mins').innerText = Math.floor(monthSecs / 60);
+
       let fav = "None", maxCount = 0;
       for (const [title, count] of Object.entries(qbStats.workoutHistory)) {
         if(count > maxCount) { maxCount = count; fav = title; }
       }
       document.getElementById('stat-fav').innerText = fav;
-
-      if(qbBadges.club100) document.getElementById('badge-100').classList.add('earned');
-      if(qbBadges.weekend) document.getElementById('badge-weekend').classList.add('earned');
-      if(qbBadges.architect) document.getElementById('badge-architect').classList.add('earned');
 
       renderCalendar();
     }
@@ -991,18 +1031,14 @@
         const todayStr = getFormattedDate(new Date());
         if (!loggedDates.includes(todayStr)) { loggedDates.push(todayStr); loggedDates.sort(); localStorage.setItem('qb_logs', JSON.stringify(loggedDates)); }
         
-        qbStats.totalSeconds += totalElapsed;
+        const currentMonthKey = todayStr.substring(0, 7);
+        if (!qbStats.monthlySeconds) qbStats.monthlySeconds = {};
+        qbStats.monthlySeconds[currentMonthKey] = (qbStats.monthlySeconds[currentMonthKey] || 0) + totalElapsed;
+        
         qbStats.workoutHistory[currentWorkout.title] = (qbStats.workoutHistory[currentWorkout.title] || 0) + 1;
         localStorage.setItem('qb_stats', JSON.stringify(qbStats));
-
-        let newBadgeMsg = "";
-        if(!qbBadges.club100 && qbStats.totalSeconds >= 6000) { qbBadges.club100 = true; newBadgeMsg += "🏆 Unlocked: 100-Minute Club! "; }
         
-        let dayOfWeek = new Date().getDay();
-        if(!qbBadges.weekend && (dayOfWeek === 0 || dayOfWeek === 6)) {
-          qbBadges.weekend = true; newBadgeMsg += "🔥 Unlocked: Weekend Warrior!";
-        }
-        localStorage.setItem('qb_badges', JSON.stringify(qbBadges));
+        syncDataToCloud(); // Save completed workout progress to cloud
 
         const streakMsg = document.getElementById('modal-streak-msg');
         let streak = 0; let checkDate = new Date(); let checkStr = getFormattedDate(checkDate);
@@ -1010,13 +1046,11 @@
         
         streakMsg.innerText = streak > 1 ? `Congratulations on your ${streak} day streak!` : "";
         streakMsg.style.display = streak > 1 ? 'block' : 'none';
-        document.getElementById('modal-badge-msg').innerText = newBadgeMsg;
         
         openModal('completion-modal');
       } else navTo('screen-home', 'home');
     }
 
-    // 14. DYNAMIC UI UPDATER
     function updateUI() {
       document.getElementById('main-timer').innerText = formatTime(timeLeft);
       document.getElementById('elapsed-time').innerText = `Elapsed: ${formatTime(totalElapsed)}`;
@@ -1030,9 +1064,122 @@
       }
     }
 
-    // 15. INIT
+    // 15. INIT AND EXPOSE FUNCTIONS FOR FIREBASE
     loadSettingsUI();
     updateProfileData();
+    renderCalendar(); 
+    document.getElementById('bottom-nav').style.display = 'none';
+
+    window.navTo = navTo;
+    window.loadSettingsUI = loadSettingsUI;
+    window.updateProfileData = updateProfileData;
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCblgsmMQZV3BCNW2toMgf97-bbhuvwROY",
+      authDomain: "quick-boost-692e9.firebaseapp.com",
+      projectId: "quick-boost-692e9",
+      storageBucket: "quick-boost-692e9.firebasestorage.app",
+      messagingSenderId: "496990176682",
+      appId: "1:496990176682:web:51b271ee2d551bc79897d3",
+      measurementId: "G-26BYSGW46R"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    
+    // Attach to window so our main script can use them
+    window.auth = auth;
+    window.db = db;
+    window.doc = doc;
+    window.setDoc = setDoc;
+
+    window.handleAuth = async function() {
+      const email = document.getElementById('auth-email').value;
+      const password = document.getElementById('auth-password').value;
+      const btn = document.getElementById('auth-action-btn');
+
+      if (!email || !password) {
+        alert("Please enter both an email and password.");
+        return;
+      }
+
+      const isSignUp = document.getElementById('auth-title').innerText === "Create Account";
+      btn.innerText = "Loading..."; 
+
+      try {
+        if (isSignUp) {
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+          // Create the blank profile on sign up
+          await setDoc(doc(db, "users", user.uid), {
+            customWorkouts: [],
+            customExercises: [],
+            qbSettings: { audio: true, haptic: true, reminders: false, time: "08:00", prepTime: 5 },
+            qbStats: { workoutHistory: {}, monthlySeconds: {} },
+            loggedDates: []
+          });
+        } else {
+          await signInWithEmailAndPassword(auth, email, password);
+        }
+        document.getElementById('auth-email').value = "";
+        document.getElementById('auth-password').value = "";
+        btn.innerText = isSignUp ? "Sign Up" : "Log In";
+      } catch (error) {
+        alert(error.message);
+        btn.innerText = isSignUp ? "Sign Up" : "Log In";
+      }
+    };
+
+    window.handleLogout = async function() {
+      try {
+        await signOut(auth);
+      } catch (error) {
+        console.error("Error signing out: ", error);
+      }
+    };
+
+    // --- NEW: CLOUD LOADING FUNCTION ---
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        document.getElementById('user-email-display').innerText = user.email;
+        
+        try {
+            // 1. Download data from Cloud
+            const docSnap = await getDoc(doc(db, "users", user.uid));
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                
+                // 2. Overwrite local variables with cloud data
+                if (data.customWorkouts) window.customWorkouts = data.customWorkouts;
+                if (data.customExercises) window.customExercises = data.customExercises;
+                if (data.qbSettings) window.qbSettings = data.qbSettings;
+                if (data.qbStats) window.qbStats = data.qbStats;
+                if (data.loggedDates) window.loggedDates = data.loggedDates;
+                
+                // 3. Refresh the UI to show the downloaded data
+                window.loadSettingsUI();
+                window.updateProfileData();
+            }
+        } catch (e) {
+            console.error("Error loading cloud data:", e);
+        }
+
+        // Send to home screen
+        if (document.getElementById('screen-login').classList.contains('active')) {
+            window.navTo('screen-home', 'home');
+        }
+      } else {
+        document.getElementById('user-email-display').innerText = "Not logged in";
+        window.navTo('screen-login', null);
+      }
+    });
   </script>
 </body>
 </html>
